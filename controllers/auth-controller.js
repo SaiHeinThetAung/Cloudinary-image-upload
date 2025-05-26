@@ -54,38 +54,43 @@ const registerUser=async(req,res)=>{
     }
 }
 
-const loginUser=async(req,res)=>{
-    const {username,password}=req.body
-    try {
-        
-        const isUser=await user.findOne({username})
-        if(isUser){
-            const isPassword=await bcrypt.compare(password,isUser.password)
-            if(isPassword){
-                res.status(201).json({
-                    success:true,
-                    message:"user successfully login"
-                })
-            }
-            else{
-                res.status(400).json({
-                    success:false,
-                    message:"password incorrect"
-                })
-            }
-        }
-        else{
-            res.status(400).json({
-                success:false,
-                message:"username incorrect "
-            })
-        }
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
 
+  try {
+    const isUser = await user.findOne({ username });
 
-    } catch (error) {
-        console.error("login failed");
-        
+    if (!isUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Username incorrect",
+      });
     }
-}
+
+    const isPassword = await bcrypt.compare(password, isUser.password);
+
+    if (!isPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Password incorrect",
+      });
+    }
+
+    //  generate a JWT token here 
+
+    return res.status(200).json({
+      success: true,
+      message: "User successfully logged in",
+    });
+
+  } catch (error) {
+    console.error("Login failed:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
 
 module.exports={registerUser,loginUser}
