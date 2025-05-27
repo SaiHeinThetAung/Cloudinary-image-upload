@@ -44,10 +44,7 @@ const registerUser=async(req,res)=>{
                 message:"user creation failed."
             })
         }
-        
-
-
-
+    
 
     } catch (error) {
         console.error("error creating a user");
@@ -102,5 +99,31 @@ const loginUser = async (req, res) => {
   }
 };
 
+const changePassword=async(req,res)=>{
+  const id=req.userInfo.userId
+  const isUser=await user.findById(id)
 
-module.exports={registerUser,loginUser}
+  const {oldPassword,newPassword}=req.body
+  const checkPassword=await bcrypt.compare(oldPassword,isUser.password)
+
+ try {
+   if(checkPassword){
+    const newlyPassword=await bcrypt.hash(newPassword,10)
+    isUser.password=newlyPassword;
+    isUser.save()
+    return res.status(200).json({
+      success:true,
+      message:"password successfully changed."
+    })
+  } 
+ } catch (error) {
+  return res.status(400).json({
+      success:false,
+      message:"error changing password."
+    })
+ }
+
+}
+
+
+module.exports={registerUser,loginUser,changePassword}

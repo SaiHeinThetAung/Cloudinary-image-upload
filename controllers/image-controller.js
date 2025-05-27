@@ -20,7 +20,8 @@ const uploadImage=async(req,res)=>{
         //store to db
         const newUploadedImage=new Image({
             url:secure_url,
-            publicId:public_id
+            publicId:public_id,
+            uploadedBy:req.userInfo.userId
         })
         await newUploadedImage.save()
 
