@@ -4,7 +4,7 @@ const { authmiddleware } = require('../middleware/auth-middleware')
 
 const router=express.Router()
 
-router.post('/welcome',authmiddleware,(req,res)=>{
+router.get('/welcome',authmiddleware,(req,res)=>{
     const data=req.userInfo
     res.status(200).json({
         success:true,

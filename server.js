@@ -4,6 +4,7 @@ const connectDb=require("./databases/db")
 const user_route=require('./routes/user-route')
 const image_route=require('./routes/image-route')
 const welcome_route=require('./routes/welcome-route')
+const admin_route=require("./routes/admin-route")
 const app =express()
 
 //database
@@ -15,6 +16,7 @@ app.use(express.json())
 //routes
 app.use('/api/auth',user_route)
 app.use('/api/image',image_route)
+app.use('/admin',admin_route)
 app.use('/',welcome_route)
 
 const port=process.env.PORT || 5000 

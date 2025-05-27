@@ -17,6 +17,10 @@ const authmiddleware=(req,res,next)=>{
     }
     } catch (error) {
         console.error("error authentication");
+        return res.json({
+            success:false,
+            message:"error no token "
+        })
         
     }
 }

@@ -84,7 +84,7 @@ const loginUser = async (req, res) => {
       role:isUser.role
     },
     process.env.SECRET_KEY,{
-      expiresIn:"10m"
+      expiresIn:"3m"
     })
 
     return res.status(200).json({
