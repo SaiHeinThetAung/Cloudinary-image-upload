@@ -4,9 +4,11 @@ const cloudinaryUploader=async(filepath)=>{
     try {
         
         const result=await cloudinary.uploader.upload(filepath)
+
+        console.log('upload to cloud',result.secure_url,result.public_id)
         return {
-            url:result.secure_url,
-            publicId:result.public_id
+            secure_url:result.secure_url,
+            public_id:result.public_id
         }    
 
 
